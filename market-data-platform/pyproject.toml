@@ -29,3 +29,7 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 110
 src = ["src", "tests"]
+
+
+[tool.vercel]
+entrypoint = "src.mdp.api.main:app"
