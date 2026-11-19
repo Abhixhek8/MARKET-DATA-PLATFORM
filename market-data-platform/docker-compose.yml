@@ -1,0 +1,21 @@
+services:
+  pipeline:            # runs once, then exits; schedule with cron or Airflow in production
+    build: .
+    command: python -m mdp.pipeline run
+    env_file: .env.example
+    volumes: [ "warehouse:/app/data" ]
+  api:
+    build: .
+    env_file: .env.example
+    ports: [ "8000:8000" ]
+    volumes: [ "warehouse:/app/data" ]
+    depends_on: { pipeline: { condition: service_completed_successfully } }
+  dashboard:
+    build: .
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    env_file: .env.example
+    ports: [ "8501:8501" ]
+    volumes: [ "warehouse:/app/data" ]
+    depends_on: { pipeline: { condition: service_completed_successfully } }
+volumes:
+  warehouse:

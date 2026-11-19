@@ -1,0 +1,13 @@
+pandas>=2.1
+numpy
+scikit-learn
+pyarrow
+yfinance
+fastapi
+uvicorn[standard]
+streamlit
+plotly
+mlflow
+pytest
+httpx
+ruff
